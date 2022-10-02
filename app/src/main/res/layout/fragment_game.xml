@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.composit.composition.presentation.GameViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -15,12 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="@string/timer"
+            android:text="@{viewModel.formattedTime}"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/timer" />
 
         <TextView
             android:id="@+id/tv_sum"
@@ -30,12 +39,13 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/circle_button"
             android:gravity="center"
-            android:text="@string/coin"
+            app:numberToText="@{viewModel.question.sum}"
             android:textColor="@color/white"
             android:textSize="60sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_timer"
+            tools:text="@string/coin" />
 
 
         <LinearLayout
@@ -58,11 +68,12 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/custom_view_3"
                 android:gravity="center"
-                android:text="@string/coin"
+                app:numberToText="@{viewModel.question.visibleNumber}"
                 android:textColor="@color/white"
                 android:textSize="50sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_sum" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_sum"
+                tools:text="@string/coin" />
 
 
             <TextView
@@ -92,13 +103,15 @@
             android:layout_marginStart="45dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
-            android:text="@string/right_answer_in_stroke"
+            android:text="@{viewModel.progressAnswers}"
             android:textColor="@color/white"
             android:textSize="14sp"
+            app:enoughCount="@{viewModel.enoughCountOfRightAnswers}"
             app:layout_constraintEnd_toEndOf="@+id/progress_bar"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/progress_bar"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
+            app:layout_constraintTop_toBottomOf="@+id/progress_bar"
+            tools:text="@string/right_answer_in_stroke" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -121,6 +134,8 @@
                 android:layout_marginBottom="100dp"
                 android:background="@drawable/custom_view_3"
                 android:gravity="center"
+                app:onOptionItemClick="@{(option)->viewModel.chooseAnswer(option)}"
+                android:text="@{viewModel.question.options.get(0).toString()}"
                 android:textSize="30sp"
                 tools:text="1" />
 
@@ -132,6 +147,8 @@
                 android:layout_marginBottom="100dp"
                 android:background="@drawable/custom_view_4"
                 android:gravity="center"
+                app:onOptionItemClick="@{(option)->viewModel.chooseAnswer(option)}"
+                android:text="@{viewModel.question.options.get(1).toString()}"
                 android:textSize="30sp"
                 tools:text="2" />
 
@@ -143,6 +160,8 @@
                 android:layout_marginBottom="100dp"
                 android:background="@drawable/custom_view_3"
                 android:gravity="center"
+                app:onOptionItemClick="@{(option)->viewModel.chooseAnswer(option)}"
+                android:text="@{viewModel.question.options.get(2).toString()}"
                 android:textSize="30sp"
                 tools:text="3" />
         </LinearLayout>
@@ -167,6 +186,8 @@
                 android:layout_marginBottom="100dp"
                 android:background="@drawable/custom_view_4"
                 android:gravity="center"
+                app:onOptionItemClick="@{(option)->viewModel.chooseAnswer(option)}"
+                android:text="@{viewModel.question.options.get(3).toString()}"
                 android:textSize="30sp"
                 tools:text="4" />
 
@@ -177,6 +198,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="50sp"
                 android:layout_marginBottom="100dp"
+                app:onOptionItemClick="@{(option)->viewModel.chooseAnswer(option)}"
+                android:text="@{viewModel.question.options.get(4).toString()}"
                 android:background="@drawable/custom_view_3"
                 android:gravity="center"
                 android:textSize="30sp"
@@ -188,6 +211,8 @@
                 android:layout_height="80sp"
                 android:layout_marginStart="50sp"
                 android:layout_marginBottom="100dp"
+                app:onOptionItemClick="@{(option)->viewModel.chooseAnswer(option)}"
+                android:text="@{viewModel.question.options.get(5).toString()}"
                 android:background="@drawable/custom_view_4"
                 android:gravity="center"
                 android:textSize="30sp"
@@ -203,7 +228,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="45dp"
             android:max="100"
+            android:progress="@{viewModel.percentOfRightAnswer}"
+            android:secondaryProgress="@{viewModel.minPercent}"
             android:secondaryProgressTint="@android:color/background_dark"
+            app:enoughPercent="@{viewModel.enoughPercentOfRightAnswers}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
