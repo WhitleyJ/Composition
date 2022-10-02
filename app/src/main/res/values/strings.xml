@@ -15,7 +15,7 @@
     <string name="right_answer_in_stroke">Правильных ответов %s (минимум %s)</string>
     <string name="required_answer">Необходимое количество правильных ответов : %s</string>
     <string name="score">Ваш счет: %s</string>
-    <string name="real_percent">Процент правильных результатов: %s</string>
+    <string name="real_percent">Процент правильных ответов: %s</string>
     <string name="percent">Необходимый процент правильных ответов: %s</string>
     <string name="try_again">Попробовать снова</string>
     <string name="right_number">\?</string>
